@@ -1,0 +1,87 @@
+gcc-mingw32 (4.5.1-1ubuntu2) lucid; urgency=low
+
+  * Allow g++ to use *cpp in specs
+  * Un-default crt 7.0
+
+ -- Nils Maier <maierman@web.de>  Sun, 21 Nov 2010 04:42:15 +0100
+
+gcc-mingw32 (4.5.1-1ubuntu1) lucid; urgency=low
+
+  * Update build stuff
+
+ -- Nils Maier <maierman@web.de>  Sun, 31 Oct 2010 01:02:25 +0200
+
+gcc-mingw32 (4.5.1-1) lucid; urgency=low
+
+  * New upstream
+
+ -- Nils Maier <maierman@web.de>  Sun, 01 Aug 2010 21:19:26 +0200
+
+gcc-mingw32 (4.5.0-2) lucid; urgency=low
+
+  * MSVCRT: use 7.0 by default
+  * LFS fixes
+    Also fixes fstat symbol errors for crt>=0x0800
+    libstdc++ cannot be used with crt < 0x0700 any longer
+
+ -- Nils Maier <maierman@web.de>  Sun, 09 May 2010 01:07:02 +0200
+
+gcc-mingw32 (4.5.0-1) lucid; urgency=low
+
+  *  New upstream
+
+ -- Nils Maier <maierman@web.de>  Fri, 07 May 2010 22:39:23 +0200
+
+gcc-mingw32 (4.4.2-3) unstable; urgency=low
+
+  * Add amd64 support.
+
+ -- Robert Millan <rmh.debian@aybabtu.com>  Wed, 06 Jan 2010 21:27:27 +0100
+
+gcc-mingw32 (4.4.2-2) unstable; urgency=low
+
+  * rules: Don't remove $target libiberty.a.  (Closes: #562094)
+
+ -- Robert Millan <rmh.debian@aybabtu.com>  Thu, 24 Dec 2009 17:26:07 +0100
+
+gcc-mingw32 (4.4.2-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Robert Millan <rmh.debian@aybabtu.com>  Thu, 29 Oct 2009 00:20:11 +0100
+
+gcc-mingw32 (4.4.1-2) unstable; urgency=low
+
+  * Remove all info documentation, not just gfortran's.  (Closes: #543393)
+
+ -- Robert Millan <rmh.debian@aybabtu.com>  Tue, 25 Aug 2009 21:38:10 +0200
+
+gcc-mingw32 (4.4.1-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Robert Millan <rmh.debian@aybabtu.com>  Fri, 21 Aug 2009 22:12:08 +0200
+
+gcc-mingw32 (4.4.0-3) unstable; urgency=low
+
+  * Fix description to make it clearer both C and C++ are supported.
+    (Closes: #538732)
+  * Enable gfortran.  Thanks Alberto Luaces.  (Closes: #539034)
+  * Disable shared libraries (--disable-shared).  (Closes: #539033)
+
+ -- Robert Millan <rmh.debian@aybabtu.com>  Thu, 30 Jul 2009 23:52:31 +0200
+
+gcc-mingw32 (4.4.0-2) unstable; urgency=low
+
+  * Provide i586-mingw32msvc-cc symlink.  (Closes: #538428)
+  * control (Provides): Add mingw32.  (Closes: #538413)
+  * control: Add Vcs-Svn and Vcs-Browser (hosted in collab-maint).
+  * Use tarball.mk from cdbs >= 0.4.57 now that it supports LZMA.
+
+ -- Robert Millan <rmh.debian@aybabtu.com>  Sun, 26 Jul 2009 16:26:33 +0200
+
+gcc-mingw32 (4.4.0-1) unstable; urgency=low
+
+  * Initial release. (Closes: #529183)
+
+ -- Robert Millan <rmh.debian@aybabtu.com>  Fri, 03 Jul 2009 00:33:53 +0200

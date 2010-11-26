@@ -1,0 +1,42 @@
+
+See http://gcc.gnu.org/bugzilla/show_bug.cgi?id=40191
+
+Index: libgcc/configure
+===================================================================
+--- libgcc/configure	(revision 147673)
++++ libgcc/configure	(working copy)
+@@ -1641,6 +1641,8 @@
+ if ( test $srcdir = . && test -d gcc ) \
+    || test -d $srcdir/../host-${host_noncanonical}; then
+   host_subdir="host-${host_noncanonical}"
++elif test -d $srcdir/../host-${build_noncanonical}; then
++  host_subdir="host-${build_noncanonical}"
+ else
+   host_subdir=.
+ fi
+Index: config/acx.m4
+===================================================================
+--- config/acx.m4	(revision 147673)
++++ config/acx.m4	(working copy)
+@@ -94,6 +94,8 @@
+ if ( test $srcdir = . && test -d gcc ) \
+    || test -d $srcdir/../host-${host_noncanonical}; then
+   host_subdir="host-${host_noncanonical}"
++elif test -d $srcdir/../host-${build_noncanonical}; then
++  host_subdir="host-${build_noncanonical}"
+ else
+   host_subdir=.
+ fi
+Index: libgfortran/configure
+===================================================================
+--- libgfortran/configure	(revision 147673)
++++ libgfortran/configure	(working copy)
+@@ -1596,6 +1596,8 @@
+ if ( test $srcdir = . && test -d gcc ) \
+    || test -d $srcdir/../host-${host_noncanonical}; then
+   host_subdir="host-${host_noncanonical}"
++elif test -d $srcdir/../host-${build_noncanonical}; then
++  host_subdir="host-${build_noncanonical}"
+ else
+   host_subdir=.
+ fi

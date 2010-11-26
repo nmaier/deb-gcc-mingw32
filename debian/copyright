@@ -1,0 +1,19 @@
+Name: GCC for MingW32 build package
+Maintainer: Robert Millan <rmh.debian@aybabtu.com>
+
+
+Files: debian/*
+Copyright: 2009, Robert Millan <rmh.debian@aybabtu.com>
+License: GPL-3+
+
+Files: gcc-4.4.0-dfsg.tar.lzma
+Copyright: 1986, 1987, 1988, 1989, 1990, 1991, 1992, 1993, 1994, 1995, 1996,
+ 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008
+ Free Software Foundation, Inc.
+License: GPL-3+
+
+
+License: GPL-3+
+ On Debian systems the full text of the GNU General Public
+ License can be found in the `/usr/share/common-licenses/GPL'
+ file.

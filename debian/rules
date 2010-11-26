@@ -1,0 +1,85 @@
+#!/usr/bin/make -f
+SHELL = bash
+
+deb_version		:= $(shell dpkg-parsechangelog | sed -ne "s/^Version: \(.*\)/\1/p")
+upstream_version	:= $(shell echo $(deb_version) | sed -e "s/-[^-]*$$//")
+major 			:= $(shell echo $(upstream_version) | sed -e "s/\([0-9]\+\.[0-9]\+\)[\.-].*/\1/g")
+
+DEB_TARBALL = gcc-$(upstream_version).tar.bz2
+DEB_TAR_SRCDIR := gcc-$(upstream_version)
+
+include /usr/share/cdbs/1/rules/tarball.mk
+include /usr/share/cdbs/1/rules/debhelper.mk
+include /usr/share/cdbs/1/rules/simple-patchsys.mk
+
+DEB_CONFIGURE_USER_FLAGS := \
+	--build=$(DEB_BUILD_GNU_TYPE) --prefix=/usr --includedir="\$${prefix}/include" \
+	--mandir="\$${prefix}/share/man" --infodir="\$${prefix}/share/info" --sysconfdir=/etc --localstatedir=/var \
+	--libexecdir="\$${prefix}/lib/$(package)" \
+	\
+	--disable-multilib \
+	--enable-threads \
+	--enable-sjlj-exceptions \
+	--enable-version-specific-runtime-libs \
+	--disable-shared \
+	$(NULL)
+
+
+# native strip messes up the archive indexes
+DEB_STRIP_EXCLUDE = /usr/lib/gcc/{i586,amd64}-mingw32msvc /usr/{i586,amd64}-mingw32msvc/lib
+
+build-tree/gcc-mingw32/Makefile: apply-patches
+	mkdir -p $(subst /Makefile,,$@)
+	cd $(subst /Makefile,,$@) && $(CURDIR)/$(DEB_SRCDIR)/configure $(DEB_CONFIGURE_USER_FLAGS) \
+		--target=i586-mingw32msvc \
+		--enable-languages=c,c++,fortran
+
+build-tree/gcc-mingw64/Makefile: apply-patches
+	mkdir -p $(subst /Makefile,,$@)
+	cd $(subst /Makefile,,$@) && $(CURDIR)/$(DEB_SRCDIR)/configure $(DEB_CONFIGURE_USER_FLAGS) \
+		--target=amd64-mingw32msvc \
+		--enable-languages=c
+
+stamps/build-mingw32: build-tree/gcc-mingw32/Makefile
+	$(MAKE) -C $(subst /Makefile,,$<)
+	mkdir -p stamps
+	touch $@
+
+stamps/build-mingw64: build-tree/gcc-mingw64/Makefile
+	$(MAKE) -C $(subst /Makefile,,$<) all-gcc
+	mkdir -p stamps
+	touch $@
+
+stamps/install: stamps/build-mingw32 stamps/build-mingw64
+	$(MAKE) -C build-tree/gcc-mingw32 install DESTDIR=$(CURDIR)/debian/gcc-mingw32/
+	$(MAKE) -C build-tree/gcc-mingw64 install-gcc DESTDIR=$(CURDIR)/debian/gcc-mingw32/
+
+	# remove all documentation (already in gcc-doc)
+	rm -rf debian/gcc-mingw32/usr/share/{man/man7,man/man1,info}
+
+	# collides with gcc locales
+	rm -rf debian/gcc-mingw32/usr/share/locale
+
+	# the host version of libiberty has no bussiness being in this package
+	rm -f debian/gcc-mingw32/usr/lib/libiberty.a
+
+	# libtool baggage
+	rm -f debian/gcc-mingw32/usr/lib/gcc/*-mingw32msvc/*/*.la
+
+	# remove empty directories
+	for i in 1 2 ; do \
+		find debian/gcc-mingw32/ -type d -empty | while read i ; do rmdir $$i ; done ; \
+	done
+
+	# this replaces dh_strip (disabled for i586-mingw32msvc, see above)
+	i586-mingw32msvc-strip --strip-debug debian/gcc-mingw32/usr/lib/gcc/i586-mingw32msvc/*/*.a
+
+	mkdir -p stamps
+	touch $@
+
+build/gcc-mingw32:: stamps/build-mingw32 stamps/build-mingw64
+
+install/gcc-mingw32:: stamps/install
+
+clean::
+	rm -rf stamps

@@ -1,0 +1,29 @@
+Source: gcc-mingw32
+Section: devel
+Priority: extra
+Maintainer: Robert Millan <rmh.debian@aybabtu.com>
+Build-Depends: cdbs (>= 0.4.57),
+ debhelper (>= 7),
+ lzma,
+ mingw32-binutils (>= 2.20), mingw32-runtime (>= 3.12),
+ libgmp3-dev (>= 2:4.1),
+ libmpfr-dev (>= 2.3.2),
+ libppl0.10-dev (>= 0.10),
+ libcloog-ppl-dev (>= 0.15),
+ libmpc-dev (>= 0.8.1),
+Standards-Version: 3.8.1
+Homepage: http://gcc.gnu.org/
+Vcs-Svn: svn://svn.debian.org/svn/collab-maint/deb-maint/gcc-mingw32
+Vcs-Browser: http://svn.debian.org/viewsvn/collab-maint/deb-maint/gcc-mingw32
+
+Package: gcc-mingw32
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, mingw32-binutils (>= 2.20), mingw32-runtime (>= 3.12), libmpc2 (>= 0.8.1)
+Conflicts: mingw32
+Provides: mingw32
+Suggests: gcc-doc, cpp-doc
+Description: The GNU Compiler Collection (cross compiler for MingW32)
+ This is the GNU Compiler Collection, a fairly portable optimizing compiler which
+ supports multiple languages.
+ .
+ This package includes support for cross-compiling to a MingW32 target.

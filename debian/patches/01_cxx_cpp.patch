@@ -1,0 +1,10 @@
+--- gcc-4.5.1/gcc/config/i386/mingw32.h.orig	2010-11-24 12:01:14.619992080 +0100
++++ gcc-4.5.1/gcc/config/i386/mingw32.h	2010-11-24 12:01:44.310001212 +0100
+@@ -72,6 +72,7 @@
+ 
+ #undef CPP_SPEC
+ #define CPP_SPEC "%{posix:-D_POSIX_SOURCE} %{mthreads:-D_MT}"
++#define CPLUSPLUS_CPP_SPEC "%(cpp)"
+ 
+ /* For Windows applications, include more libraries, but always include
+    kernel32.  */
